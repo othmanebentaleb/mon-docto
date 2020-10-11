@@ -10,13 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
@@ -29,12 +30,13 @@ public class User {
     private Date birthDate;
     private String address;
     @Email(message = "Enter a valid email address")
+    @NotNull
     private String email;
     @NotNull
     @Pattern.List({
-            @Pattern( regexp = "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$", message = "phone number must be valid"),
-            @Pattern( regexp = "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$", message = "phone number must be valid"),
-            @Pattern( regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$", message = "phone number must be valid"),
+            @Pattern(regexp = "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$", message = "phone number must be valid"),
+            @Pattern(regexp = "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$", message = "phone number must be valid"),
+            @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$", message = "phone number must be valid"),
     })
     private String phoneNumber;
 }

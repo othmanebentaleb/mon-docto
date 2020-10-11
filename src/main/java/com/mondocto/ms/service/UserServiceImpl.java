@@ -23,17 +23,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return null;
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    public User findByPhoneNumber(String phoneNumber) {
-        return null;
+    public Optional<User> findByPhoneNumber(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber);
     }
 
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public Optional<User> findById(Long id){
+        return userRepository.findById(id);
+    }
+
 }
