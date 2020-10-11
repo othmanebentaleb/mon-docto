@@ -4,7 +4,6 @@ import com.mondocto.ms.entity.User;
 import com.mondocto.ms.exceptions.ResourceAleradyExistsException;
 import com.mondocto.ms.exceptions.UserNotFoundException;
 import com.mondocto.ms.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
