@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +13,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@ToString
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +41,56 @@ public class User implements Serializable {
             @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$", message = "phone number must be valid"),
     })
     private String phoneNumber;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Optional<String> getLastName() {
+        return Optional.ofNullable(lastName);
+    }
+
+    public Optional<String> getFirstName() {
+        return Optional.ofNullable(firstName);
+    }
+
+    public Optional<Date> getBirthDate() {
+        return Optional.ofNullable(birthDate);
+    }
+
+    public Optional<String> getAddress() {
+        return Optional.ofNullable(address);
+    }
+
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
+    }
+
+    public Optional<String> getPhoneNumber() {
+        return Optional.ofNullable(phoneNumber);
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

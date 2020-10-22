@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +24,9 @@ public class UserRegistrationResource {
     private static final Logger logger = LoggerFactory.getLogger(UserRegistrationResource.class);
 
     @PostMapping("/user")
-    public ResponseEntity<Object> registration(@RequestBody @Valid User user) {
+    public ResponseEntity<Object> registration(@RequestBody @Valid @NotNull User user) {
+        this.throwExistingResourceException(user.getEmail().get().toLowerCase(), user.getPhoneNumber().get());
         Optional<User> userRegistered;
-        if (!user.getEmail().isEmpty() && !user.getPhoneNumber().isEmpty()) {
-            logger.error("Email '"+ user.getEmail()+"' or phone number '" + user.getPhoneNumber() + "' exist alerady");
-            this.throwExistingResourceException(user.getEmail(), user.getPhoneNumber());
-        }
         userRegistered = Optional.ofNullable(userService.createUser(user));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -57,11 +55,13 @@ public class UserRegistrationResource {
     private void throwExistingResourceException(String email, String phoneNumber) {
         Optional<User> userRegistered = userService.findByEmail(email);
         userRegistered.ifPresent(userFound -> {
+            logger.error("Email '"+email+" exists alrady");
             throw new ResourceAleradyExistsException("Email : " + userFound.getEmail() + " Already exists");
         });
         userRegistered = userService.findByPhoneNumber(phoneNumber);
         userRegistered.ifPresent(userFound -> {
-            throw new ResourceAleradyExistsException("Phone number : " + userFound.getPhoneNumber() + " Aleready exists");
+            logger.error("Phone Number '"+phoneNumber+" exists already");
+            throw new ResourceAleradyExistsException("Phone number : " + userFound.getPhoneNumber() + " Already exists");
         });
     }
 

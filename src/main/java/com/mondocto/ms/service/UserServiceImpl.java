@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         if(Optional.of(user).isPresent()){
+          user.setEmail(user.getEmail().get().toLowerCase());
           return userRepository.save(user);
         }
         return null;
