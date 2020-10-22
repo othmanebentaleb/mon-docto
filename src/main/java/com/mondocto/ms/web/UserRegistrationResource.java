@@ -27,7 +27,7 @@ public class UserRegistrationResource {
     public ResponseEntity<Object> registration(@RequestBody @Valid @NotNull User user) {
         this.throwExistingResourceException(user.getEmail().get().toLowerCase(), user.getPhoneNumber().get());
         Optional<User> userRegistered;
-        userRegistered = Optional.ofNullable(userService.createUser(user));
+        userRegistered = Optional.of(userService.createUser(user));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(userRegistered.get().getId())
